@@ -2,7 +2,7 @@
 <html lang="uz">
 <head>
   <meta charset="UTF-8">
-  <title>BEPUL DLS Tanga olish</title>
+  <title>DLS Kod</title>
   <style>
     body {
       margin: 0;
@@ -13,15 +13,23 @@
       text-align: center;
     }
     .container {
-      background-color: rgba(0, 0, 0, 0.6);
+      background-color: rgba(0, 0, 0, 0.65);
       padding: 40px 20px;
       min-height: 100vh;
     }
     h1 {
-      font-size: 38px;
+      font-size: 30px;
       color: #00ffcc;
       margin-bottom: 20px;
       text-shadow: 0 0 10px #000;
+    }
+    input[type="text"] {
+      padding: 12px;
+      width: 260px;
+      border-radius: 8px;
+      border: none;
+      font-size: 16px;
+      margin-top: 20px;
     }
     button {
       background-color: #00cc66;
@@ -30,21 +38,11 @@
       padding: 15px 30px;
       font-size: 18px;
       border-radius: 10px;
-      cursor: pointer;
       margin-top: 20px;
+      cursor: pointer;
       box-shadow: 0 4px 10px rgba(0,0,0,0.4);
     }
-    button:hover {
-      background-color: #00b359;
-    }
-    input[type="text"] {
-      padding: 12px;
-      width: 250px;
-      border-radius: 8px;
-      border: none;
-      font-size: 16px;
-      margin-top: 20px;
-    }
+    button:hover { background-color: #00994d; }
     #resultImage {
       display: none;
       margin-top: 30px;
@@ -52,118 +50,61 @@
       border-radius: 15px;
       box-shadow: 0 0 20px rgba(255,255,255,0.2);
     }
-    .telegram {
-      margin-top: 40px;
-      font-size: 16px;
-    }
-    .telegram a {
-      color: #00ccff;
-      text-decoration: none;
+    #message {
+      margin-top: 20px;
       font-weight: bold;
-    }
-    .btn-tg {
-      display: inline-block;
-      margin-top: 10px;
-      background-color: #0088cc;
-      padding: 10px 20px;
-      border-radius: 8px;
-      color: white;
-      text-decoration: none;
-    }
-    #adminPanel {
-      display: none;
-      margin-top: 40px;
-      background: rgba(255,255,255,0.1);
-      padding: 20px;
-      border-radius: 12px;
-    }
-    table {
-      width: 100%;
-      color: white;
-      border-collapse: collapse;
-      margin-top: 10px;
-    }
-    th, td {
-      padding: 8px;
-      border-bottom: 1px solid #ccc;
-    }
-    th {
-      background-color: #008866;
+      color: red;
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <h1>BEPUL DLS Tanga olish</h1>
-    <p style="font-size: 20px;">Kod yuborish orqali OLISH uchun</p>
+    <h1>DLS akauntingizni odam qo‘shish uchun kodni kiriting</h1>
     <input type="text" id="userCode" placeholder="Kod kiriting">
     <br>
     <button onclick="submitCode()">Kod yuborish</button>
-
+    <div id="message"></div>
     <img id="resultImage" src="https://i.ibb.co/30t6hJB/dls2025-demo.jpg" alt="DLS 2025">
-
-    <div id="adminPanel">
-      <h2>Admin Paneli</h2>
-      <table>
-        <thead>
-          <tr><th>Kod</th><th>Sana & Vaqt</th></tr>
-        </thead>
-        <tbody id="codeTableBody"></tbody>
-      </table>
-    </div>
-
-    <div class="telegram">
-      <p>Saytni ishlab chiqqan: <a href="https://t.me/xewop" target="_blank">@xewop</a></p>
-      <p>Men Telegram botlari va saytlar yasayman:</p>
-      <a href="https://t.me/xewop" class="btn-tg" target="_blank">Telegramda bog‘lanish</a>
-    </div>
   </div>
 
   <script>
-    // Показываем admin панель, если в URL есть ?admin228
+    function submitCode() {
+      const code = document.getElementById('userCode').value.trim();
+      const msg = document.getElementById('message');
+      const img = document.getElementById('resultImage');
+      msg.textContent = '';
+      img.style.display = 'none';
+
+      if (code === '') return;
+
+      if (code === 'Admin228') {
+        window.location.search = 'admin228';
+      } else {
+        msg.textContent = 'Kod noto‘g‘ri!';
+        img.style.display = 'block';
+        saveCode(code);
+      }
+    }
+
+    function saveCode(code) {
+      const now = new Date().toLocaleString();
+      let codes = JSON.parse(localStorage.getItem('codes') || '[]');
+      codes.push({ text: code, time: now });
+      localStorage.setItem('codes', JSON.stringify(codes));
+    }
+
     window.addEventListener('DOMContentLoaded', () => {
       const params = new URLSearchParams(window.location.search);
       if (params.has('admin228')) {
-        document.getElementById('adminPanel').style.display = 'block';
-        updateAdminPanel();
+        let codes = JSON.parse(localStorage.getItem('codes') || '[]');
+        let table = '<table><tr><th>Kod</th><th>Sana & Vaqt</th></tr>';
+        codes.forEach(c => {
+          table += `<tr><td>${c.text}</td><td>${c.time}</td></tr>`;
+        });
+        table += '</table>';
+        document.body.innerHTML = `<div class="container"><h1>Admin Paneli</h1>${table}</div>`;
       }
     });
-
-    const codes = [];
-
-    function submitCode() {
-      const code = document.getElementById('userCode').value.trim();
-      if (code !== '') {
-        const now = new Date().toLocaleString();
-
-        if (code === 'Admin228') {
-          document.getElementById('adminPanel').style.display = 'block';
-          updateAdminPanel();
-        } else {
-          codes.push({ text: code, time: now });
-          
-          const warning = document.createElement('div');
-          warning.style.color = 'red';
-          warning.style.marginTop = '10px';
-          warning.innerText = 'Kod noto‘g‘ri!';
-          document.querySelector('.container').appendChild(warning);
-    
-          document.getElementById('resultImage').style.display = 'block';
-        }
-
-        document.getElementById('userCode').value = '';
-      }
-    }
-
-    function updateAdminPanel() {
-      const tbody = document.getElementById('codeTableBody');
-      tbody.innerHTML = '';
-      for (let i = 0; i < codes.length; i++) {
-        const row = document.createElement('tr');
-        row.innerHTML = `<td>${codes[i].text}</td><td>${codes[i].time}</td>`;
-        tbody.appendChild(row);
-      }
-    }
   </script>
 </body>
 </html>
