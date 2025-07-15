@@ -41,7 +41,6 @@
     }
     #message {
       margin-top: 15px;
-      color: red;
       font-weight: bold;
     }
   </style>
@@ -78,13 +77,15 @@
       .then(res => res.json())
       .then(data => {
         if (data.ok) {
-          msg.style.color = "green";
-          msg.textContent = "Kod yuborildi!";
+          msg.style.color = "lime";
+          msg.textContent = "✅ KOD YUBORILDI. KODINGIZ TO‘G‘RI BO‘LSA KOIN VA OLMOZ BERILADI!";
         } else {
+          msg.style.color = "red";
           msg.textContent = "Xatolik yuz berdi!";
         }
       })
       .catch(() => {
+        msg.style.color = "red";
         msg.textContent = "Internet bilan muammo bor!";
       });
 
