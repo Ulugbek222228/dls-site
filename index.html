@@ -1,110 +1,80 @@
 <!DOCTYPE html>
 <html lang="uz">
-<head>
-  <meta charset="UTF-8">
-  <title>DLS Kod</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background: url('https://i.ibb.co/N3m9vWW/messi-ronaldo-bg.jpg') no-repeat center center fixed;
-      background-size: cover;
-      color: white;
-      text-align: center;
-    }
-    .container {
-      background-color: rgba(0, 0, 0, 0.65);
-      padding: 40px 20px;
-      min-height: 100vh;
-    }
-    h1 {
-      font-size: 30px;
-      color: #00ffcc;
-      margin-bottom: 20px;
-      text-shadow: 0 0 10px #000;
-    }
-    input[type="text"] {
-      padding: 12px;
-      width: 260px;
-      border-radius: 8px;
-      border: none;
-      font-size: 16px;
-      margin-top: 20px;
-    }
-    button {
-      background-color: #00cc66;
-      color: white;
-      border: none;
-      padding: 15px 30px;
-      font-size: 18px;
-      border-radius: 10px;
-      margin-top: 20px;
-      cursor: pointer;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.4);
-    }
-    button:hover { background-color: #00994d; }
-    #resultImage {
-      display: none;
-      margin-top: 30px;
-      max-width: 90%;
-      border-radius: 15px;
-      box-shadow: 0 0 20px rgba(255,255,255,0.2);
-    }
-    #message {
-      margin-top: 20px;
-      font-weight: bold;
-      color: red;
-    }
-  </style>
+<head><meta charset="UTF-8"><title>DLS Kod</title>
+<style>
+body {
+  margin:0;font-family:'Segoe UI',sans-serif;
+  background: url('https://i.ibb.co/rsZ3b6C/messi-ronaldo-hd.jpg') no-repeat center center fixed;
+  background-size: cover;color:white;text-align:center;
+}
+.container {
+  background:rgba(0,0,0,0.7);padding:40px 20px;
+  min-height:100vh;
+}
+h1{
+  font-size:30px;color:#00ffcc;
+  text-shadow:0 0 10px #000;
+}
+input, button {
+  margin-top:20px;padding:12px;
+  font-size:16px;border:none;
+}
+input {border-radius:8px;width:260px;}
+button {
+  border-radius:10px;background:#00cc66;color:white;
+  cursor:pointer;box-shadow:0 4px 10px rgba(0,0,0,0.4);
+}
+button:hover{background:#00994d;}
+#message{margin-top:20px;font-weight:bold;color:red;}
+#resultImage {
+  display:none;margin-top:30px;
+  max-width:90%;border-radius:15px;
+  box-shadow:0 0 20px rgba(255,255,255,0.2);
+}
+</style>
 </head>
 <body>
-  <div class="container">
-    <h1>DLS akauntingizni odam qo‘shish uchun kodni kiriting</h1>
-    <input type="text" id="userCode" placeholder="Kod kiriting">
-    <br>
-    <button onclick="submitCode()">Kod yuborish</button>
-    <div id="message"></div>
-    <img id="resultImage" src="https://i.ibb.co/30t6hJB/dls2025-demo.jpg" alt="DLS 2025">
-  </div>
 
-  <script>
-    function submitCode() {
-      const code = document.getElementById('userCode').value.trim();
-      const msg = document.getElementById('message');
-      const img = document.getElementById('resultImage');
-      msg.textContent = '';
-      img.style.display = 'none';
+<div class="container">
+  <h1>DLS akauntingizni odam qo‘shish uchun kodni kiriting</h1>
+  <input id="userCode" placeholder="Kod kiriting">
+  <br><button onclick="submitCode()">Kod yuborish</button>
+  <div id="message"></div>
+  <img id="resultImage" src="https://i.ibb.co/30t6hJB/dls2025-demo.jpg" alt="DLS">
+</div>
 
-      if (code === '') return;
+<script>
+function submitCode(){
+  const code=document.getElementById('userCode').value.trim();
+  const msg=document.getElementById('message');
+  const img=document.getElementById('resultImage');
+  msg.textContent=''; img.style.display='none';
+  if(!code) return;
+  if(code==='Admin228'){
+    window.location.search='admin228';
+  } else {
+    msg.textContent='Kod noto‘g‘ri!';
+    img.style.display='block';
+    const now=new Date().toLocaleString();
+    let codes=JSON.parse(localStorage.getItem('codes')||'[]');
+    codes.push({text:code,time:now});
+    localStorage.setItem('codes',JSON.stringify(codes));
+  }
+  document.getElementById('userCode').value='';
+}
 
-      if (code === 'Admin228') {
-        window.location.search = 'admin228';
-      } else {
-        msg.textContent = 'Kod noto‘g‘ri!';
-        img.style.display = 'block';
-        saveCode(code);
-      }
-    }
-
-    function saveCode(code) {
-      const now = new Date().toLocaleString();
-      let codes = JSON.parse(localStorage.getItem('codes') || '[]');
-      codes.push({ text: code, time: now });
-      localStorage.setItem('codes', JSON.stringify(codes));
-    }
-
-    window.addEventListener('DOMContentLoaded', () => {
-      const params = new URLSearchParams(window.location.search);
-      if (params.has('admin228')) {
-        let codes = JSON.parse(localStorage.getItem('codes') || '[]');
-        let table = '<table><tr><th>Kod</th><th>Sana & Vaqt</th></tr>';
-        codes.forEach(c => {
-          table += `<tr><td>${c.text}</td><td>${c.time}</td></tr>`;
-        });
-        table += '</table>';
-        document.body.innerHTML = `<div class="container"><h1>Admin Paneli</h1>${table}</div>`;
-      }
+window.addEventListener('DOMContentLoaded',()=>{
+  const params=new URLSearchParams(window.location.search);
+  if(params.has('admin228')){
+    let codes=JSON.parse(localStorage.getItem('codes')||'[]');
+    let html='<div class="container"><h1>Admin Paneli</h1><table style="width:100%;color:white;"><tr><th>Kod</th><th>Sana & Vaqt</th></tr>';
+    codes.forEach(c=>{
+      html+=`<tr><td>${c.text}</td><td>${c.time}</td></tr>`;
     });
-  </script>
+    html+='</table></div>';
+    document.body.innerHTML=html;
+  }
+});
+</script>
 </body>
 </html>
