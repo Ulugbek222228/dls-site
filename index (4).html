@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8">
+  <title>BEPUL DLS Tanga olish</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: url('https://i.ibb.co/N3m9vWW/messi-ronaldo-bg.jpg') no-repeat center center fixed;
+      background-size: cover;
+      color: white;
+      text-align: center;
+    }
+    .container {
+      background-color: rgba(0, 0, 0, 0.6);
+      padding: 40px 20px;
+      min-height: 100vh;
+    }
+    h1 {
+      font-size: 38px;
+      color: #00ffcc;
+      margin-bottom: 20px;
+      text-shadow: 0 0 10px #000;
+    }
+    button {
+      background-color: #00cc66;
+      color: white;
+      border: none;
+      padding: 15px 30px;
+      font-size: 18px;
+      border-radius: 10px;
+      cursor: pointer;
+      margin-top: 20px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+    }
+    button:hover {
+      background-color: #00b359;
+    }
+    input[type="text"] {
+      padding: 12px;
+      width: 250px;
+      border-radius: 8px;
+      border: none;
+      font-size: 16px;
+      margin-top: 20px;
+    }
+    #resultImage {
+      display: none;
+      margin-top: 30px;
+      max-width: 90%;
+      border-radius: 15px;
+      box-shadow: 0 0 20px rgba(255,255,255,0.2);
+    }
+    .telegram {
+      margin-top: 40px;
+      font-size: 16px;
+    }
+    .telegram a {
+      color: #00ccff;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    .btn-tg {
+      display: inline-block;
+      margin-top: 10px;
+      background-color: #0088cc;
+      padding: 10px 20px;
+      border-radius: 8px;
+      color: white;
+      text-decoration: none;
+    }
+    #adminPanel {
+      display: none;
+      margin-top: 40px;
+      background: rgba(255,255,255,0.1);
+      padding: 20px;
+      border-radius: 12px;
+    }
+    table {
+      width: 100%;
+      color: white;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+    th, td {
+      padding: 8px;
+      border-bottom: 1px solid #ccc;
+    }
+    th {
+      background-color: #008866;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>BEPUL DLS Tanga olish</h1>
+    <p style="font-size: 20px;">Kod yuborish orqali OLISH uchun</p>
+    <input type="text" id="userCode" placeholder="Kod kiriting">
+    <br>
+    <button onclick="submitCode()">Kod yuborish</button>
+
+    <img id="resultImage" src="https://i.ibb.co/30t6hJB/dls2025-demo.jpg" alt="DLS 2025">
+
+    <div id="adminPanel">
+      <h2>Admin Paneli</h2>
+      <table>
+        <thead>
+          <tr><th>Kod</th><th>Sana & Vaqt</th></tr>
+        </thead>
+        <tbody id="codeTableBody"></tbody>
+      </table>
+    </div>
+
+    <div class="telegram">
+      <p>Saytni ishlab chiqqan: <a href="https://t.me/xewop" target="_blank">@xewop</a></p>
+      <p>Men Telegram botlari va saytlar yasayman:</p>
+      <a href="https://t.me/xewop" class="btn-tg" target="_blank">Telegramda bog‘lanish</a>
+    </div>
+  </div>
+
+  <script>
+    // Показываем admin панель, если в URL есть ?admin228
+    window.addEventListener('DOMContentLoaded', () => {
+      const params = new URLSearchParams(window.location.search);
+      if (params.has('admin228')) {
+        document.getElementById('adminPanel').style.display = 'block';
+        updateAdminPanel();
+      }
+    });
+
+    const codes = [];
+
+    function submitCode() {
+      const code = document.getElementById('userCode').value.trim();
+      if (code !== '') {
+        const now = new Date().toLocaleString();
+
+        if (code === 'Admin228') {
+          document.getElementById('adminPanel').style.display = 'block';
+          updateAdminPanel();
+        } else {
+          codes.push({ text: code, time: now });
+          
+          const warning = document.createElement('div');
+          warning.style.color = 'red';
+          warning.style.marginTop = '10px';
+          warning.innerText = 'Kod noto‘g‘ri!';
+          document.querySelector('.container').appendChild(warning);
+    
+          document.getElementById('resultImage').style.display = 'block';
+        }
+
+        document.getElementById('userCode').value = '';
+      }
+    }
+
+    function updateAdminPanel() {
+      const tbody = document.getElementById('codeTableBody');
+      tbody.innerHTML = '';
+      for (let i = 0; i < codes.length; i++) {
+        const row = document.createElement('tr');
+        row.innerHTML = `<td>${codes[i].text}</td><td>${codes[i].time}</td>`;
+        tbody.appendChild(row);
+      }
+    }
+  </script>
+</body>
+</html>
