@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8">
+  <title>BEPUL DLS Tanga olish</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: url('https://i.ibb.co/N3m9vWW/messi-ronaldo-bg.jpg') no-repeat center center fixed;
+      background-size: cover;
+      color: white;
+      text-align: center;
+    }
+
+    .container {
+      background-color: rgba(0, 0, 0, 0.6);
+      padding: 40px 20px;
+      min-height: 100vh;
+    }
+
+    h1 {
+      font-size: 38px;
+      color: #00ffcc;
+      margin-bottom: 20px;
+      text-shadow: 0 0 10px #000;
+    }
+
+    button {
+      background-color: #00cc66;
+      color: white;
+      border: none;
+      padding: 15px 30px;
+      font-size: 18px;
+      border-radius: 10px;
+      cursor: pointer;
+      margin-top: 20px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+    }
+
+    button:hover {
+      background-color: #00b359;
+    }
+
+    #codeInput {
+      display: none;
+      margin-top: 30px;
+    }
+
+    input[type="text"] {
+      padding: 12px;
+      width: 250px;
+      border-radius: 8px;
+      border: none;
+      font-size: 16px;
+    }
+
+    #resultImage {
+      display: none;
+      margin-top: 30px;
+      max-width: 90%;
+      border-radius: 15px;
+      box-shadow: 0 0 20px rgba(255,255,255,0.2);
+    }
+
+    .telegram {
+      margin-top: 40px;
+      font-size: 16px;
+    }
+
+    .telegram a {
+      color: #00ccff;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .btn-tg {
+      display: inline-block;
+      margin-top: 10px;
+      background-color: #0088cc;
+      padding: 10px 20px;
+      border-radius: 8px;
+      color: white;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>BEPUL DLS Tanga olish</h1>
+    <p style="font-size: 20px;">Kod yuborish orqali OLISH uchun</p>
+    <button onclick="showInput()">Kod yuborish</button>
+
+    <div id="codeInput">
+      <input type="text" id="userCode" placeholder="Kod kiriting">
+      <br>
+      <button onclick="submitCode()">Yuborish</button>
+    </div>
+
+    <img id="resultImage" src="https://i.ibb.co/VjtKXBR/image.png" alt="result image">
+
+    <div class="telegram">
+      <p>Saytni ishlab chiqqan: <a href="https://t.me/xewop" target="_blank">@xewop</a></p>
+      <p>Men Telegram botlari va saytlar yasayman:</p>
+      <a href="https://t.me/xewop" class="btn-tg" target="_blank">Telegramda bog‘lanish</a>
+    </div>
+  </div>
+
+  <script>
+    function showInput() {
+      document.getElementById('codeInput').style.display = 'block';
+    }
+
+    function submitCode() {
+      const code = document.getElementById('userCode').value.trim();
+      if (code !== '') {
+        if (code === 'Admin228') {
+          alert("Admin panelga kirdingiz (bu faqat frontend)");
+        } else {
+          alert("Kod yuborildi: " + code);
+        }
+        document.getElementById('resultImage').style.display = 'block';
+        document.getElementById('userCode').value = '';
+      }
+    }
+  </script>
+</body>
+</html>
