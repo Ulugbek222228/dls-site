@@ -57,6 +57,10 @@
     th {
       color: #00cc66;
     }
+    .clear-btn {
+      background-color: #cc0000;
+      margin-top: 10px;
+    }
   </style>
 </head>
 <body>
@@ -68,10 +72,9 @@
 
     <div id="adminPanel" style="display:none;">
       <h2>Admin Paneli</h2>
+      <button class="clear-btn" onclick="clearCodes()">Tozalash</button>
       <table>
-        <thead>
-          <tr><th>Kod</th><th>Vaqt</th></tr>
-        </thead>
+        <thead><tr><th>Kod</th><th>Vaqt</th></tr></thead>
         <tbody id="codeTable"></tbody>
       </table>
     </div>
@@ -82,6 +85,7 @@
     const msg = document.getElementById("message");
     const panel = document.getElementById("adminPanel");
     const table = document.getElementById("codeTable");
+
     let codes = JSON.parse(localStorage.getItem("codes") || "[]");
 
     function submitCode() {
@@ -110,6 +114,15 @@
       });
     }
 
+    function clearCodes() {
+      if (confirm("Barcha kodlarni o‘chirishni xohlaysizmi?")) {
+        codes = [];
+        localStorage.removeItem("codes");
+        renderTable();
+      }
+    }
+
+    // Avtomatik ochish agar URLda ?admin228 bo‘lsa
     if (window.location.search.includes("admin228")) {
       panel.style.display = "block";
       renderTable();
